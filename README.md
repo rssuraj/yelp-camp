@@ -26,6 +26,7 @@ HTML5, CSS3, Bootstrap 3, JavaScript, Node.js, Express.js, EJS, MongoDB
 ```
 clone/fork the repository
 cd yelp-camp
+npm install
 npm start
 ```
 

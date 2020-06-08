@@ -1,24 +1,28 @@
-var express    = require('express'),
-    app        = express(),
+var express = require('express'),
+    app = express(),
     bodyParser = require('body-parser'),
-    mongoose   = require('mongoose'),
-    flash      = require(`connect-flash`);
-    passport   = require(`passport`),
-    LocalStrategy   = require(`passport-local`),
-    methodOverride  = require(`method-override`),
-    Campground = require(`./models/campground`),
-    Comment    = require(`./models/comment`),
-    User       = require(`./models/user`),
-    seedDB     = require(`./seeds`);
+    mongoose = require('mongoose'),
+    flash = require(`connect-flash`);
+(passport = require(`passport`)),
+    (LocalStrategy = require(`passport-local`)),
+    (methodOverride = require(`method-override`)),
+    (Campground = require(`./models/campground`)),
+    (Comment = require(`./models/comment`)),
+    (User = require(`./models/user`)),
+    (seedDB = require(`./seeds`));
 
 //requiring routes
 var commentRoutes = require(`./routes/comments`),
     campgroundRoutes = require(`./routes/campgrounds`),
     indexRoutes = require(`./routes/index`);
 
-mongoose.connect(process.env.MONGO_DB, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
+mongoose.connect(process.env.MONGO_DB_YELPCAMP, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false
+});
 
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + `/public`));
 app.use(methodOverride(`_method`));
@@ -26,11 +30,13 @@ app.use(flash());
 //seedDB(); //Seeding the Data to DataBase
 
 //PASSPORT Configuration
-app.use(require(`express-session`)({
-    secret: `Please Authenticate Yourself App`,
-    resave: false,
-    saveUninitialized: false
-}));
+app.use(
+    require(`express-session`)({
+        secret: `Please Authenticate Yourself App`,
+        resave: false,
+        saveUninitialized: false
+    })
+);
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
@@ -47,6 +53,8 @@ app.use((req, res, next) => {
 app.use(`/`, indexRoutes);
 app.use(`/campgrounds`, campgroundRoutes);
 app.use(`/campgrounds/:id/comments`, commentRoutes);
+
+process.env.PORT = process.env.BPORT || process.env.PORT;
 
 app.listen(process.env.PORT, process.env.IP, () => {
     console.log(`Server started on port ${process.env.PORT}`);

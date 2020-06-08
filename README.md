@@ -12,7 +12,8 @@ User can perform the following actions in this application:
 ## Tech-stack used
 
 ```
-HTML5, CSS3, Bootstrap 3, JavaScript, Node.js, Express.js, EJS, MongoDB
+Font-end: HTML5, CSS3, Bootstrap 3, JavaScript, EJS
+Back-end: JavaScript, Node.js, Express.js, MongoDB Atlas, REST API
 ```
 
 ## Setting environment variables
